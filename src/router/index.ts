@@ -93,6 +93,17 @@ const router = createRouter({
         title: 'Member Account Management',
       },
     },
+
+    //Books Managements Routes
+
+    {
+      path: '/books-category',
+      name: 'Books Category',
+      component: () => import('../views/BooksManagement/BooksCategory.vue'),
+      meta: {
+        title: 'Books Category',
+      },
+    },
   ],
 })
 

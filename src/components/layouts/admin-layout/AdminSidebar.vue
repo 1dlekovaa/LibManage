@@ -21,6 +21,7 @@
         >
           LibManage
         </h2>
+        <h2 v-else class="text-xl font-bold text-gray-900 dark:text-white">LM</h2>
       </router-link>
     </div>
     <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
@@ -203,6 +204,11 @@ const menuGroups = [
           { name: 'Staff Account ', path: '/staff-crud' },
           { name: 'Member Account ', path: '/member-crud' },
         ],
+      },
+      {
+        icon: UserGroupIcon,
+        name: 'Books Management',
+        subItems: [{ name: 'Books Category', path: '/books-category' }],
       },
     ],
   },
