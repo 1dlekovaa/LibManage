@@ -6,6 +6,7 @@ const router = createRouter({
     return savedPosition || { left: 0, top: 0 }
   },
   routes: [
+    // Authentication Routes
     {
       path: '/',
       name: 'Signin',
@@ -38,6 +39,9 @@ const router = createRouter({
         title: 'Signin Member',
       },
     },
+
+    // Dashboard Routes
+
     {
       path: '/dashboard-admin',
       name: 'DashboardAdmin',
@@ -60,6 +64,33 @@ const router = createRouter({
       component: () => import('../views/Dashboard/DashboardMember.vue'),
       meta: {
         title: 'Dashboard Member',
+      },
+    },
+
+    //Account Managements Routes
+
+    {
+      path: '/admin-crud',
+      name: 'CRUD Admin',
+      component: () => import('../views/AccountManagement/AdminAccount.vue'),
+      meta: {
+        title: 'Admin Account Management',
+      },
+    },
+    {
+      path: '/staff-crud',
+      name: 'CRUD Staff',
+      component: () => import('../views/AccountManagement/StaffAccount.vue'),
+      meta: {
+        title: 'Staff Account Management',
+      },
+    },
+    {
+      path: '/member-crud',
+      name: 'CRUD Member',
+      component: () => import('../views/AccountManagement/MemberAccount.vue'),
+      meta: {
+        title: 'Member Account Management',
       },
     },
   ],

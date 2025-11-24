@@ -14,24 +14,13 @@
     @mouseleave="isHovered = false"
   >
     <div :class="['py-8 flex', !isExpanded && !isHovered ? 'lg:justify-center' : 'justify-start']">
-      <router-link to="/">
-        <img
+      <router-link to="/dashboard-member">
+        <h2
           v-if="isExpanded || isHovered || isMobileOpen"
-          class="dark:hidden"
-          src="/images/logo/logo.svg"
-          alt="Logo"
-          width="150"
-          height="40"
-        />
-        <img
-          v-if="isExpanded || isHovered || isMobileOpen"
-          class="hidden dark:block"
-          src="/images/logo/logo-dark.svg"
-          alt="Logo"
-          width="150"
-          height="40"
-        />
-        <img v-else src="/images/logo/logo-icon.svg" alt="Logo" width="32" height="32" />
+          class="text-xl font-semibold text-gray-900 dark:text-white"
+        >
+          LibManage
+        </h2>
       </router-link>
     </div>
     <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
@@ -167,7 +156,6 @@
           </div>
         </div>
       </nav>
-      <SidebarWidget v-if="isExpanded || isHovered || isMobileOpen" />
     </div>
   </aside>
 </template>
@@ -191,8 +179,6 @@ import {
   ListIcon,
   PlugInIcon,
 } from '@/icons'
-import SidebarWidget from '@/components/layout/SidebarWidget.vue'
-import BoxCubeIcon from '@/icons/BoxCubeIcon.vue'
 import { useSidebar } from '@/composables/useSidebar'
 
 const route = useRoute()
