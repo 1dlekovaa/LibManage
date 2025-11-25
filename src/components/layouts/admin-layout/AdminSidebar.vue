@@ -201,14 +201,17 @@ const menuGroups = [
         name: 'Accounts Management',
         subItems: [
           { name: 'Admin Account ', path: '/admin-crud' },
-          { name: 'Staff Account ', path: '/staff-crud' },
-          { name: 'Member Account ', path: '/member-crud' },
+          { name: 'Staff Account ', path: '/petugas-crud' },
+          { name: 'Member Account ', path: '/anggota-crud' },
         ],
       },
       {
         icon: UserGroupIcon,
         name: 'Books Management',
-        subItems: [{ name: 'Books Category', path: '/books-category' }],
+        subItems: [
+          { name: 'Books Category', path: '/books-category' },
+          { name: 'Books List', path: '/books-list' },
+        ],
       },
     ],
   },

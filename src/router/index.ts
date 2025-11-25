@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { setupAuthGuard } from '../utils/authMiddleware'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,19 +25,19 @@ const router = createRouter({
       },
     },
     {
-      path: '/signin-staff',
-      name: 'SignIn Staff',
-      component: () => import('../views/Auth/Staff/Signin.vue'),
+      path: '/signin-petugas',
+      name: 'SignIn Petugas',
+      component: () => import('../views/Auth/Petugas/Signin.vue'),
       meta: {
-        title: 'Signin Staff',
+        title: 'Signin Petugas',
       },
     },
     {
-      path: '/signin-member',
-      name: 'SignIn Member',
-      component: () => import('../views/Auth/Member/Signin.vue'),
+      path: '/signin-anggota',
+      name: 'SignIn Anggota',
+      component: () => import('../views/Auth/Anggota/Signin.vue'),
       meta: {
-        title: 'Signin Member',
+        title: 'Signin Anggota',
       },
     },
 
@@ -51,19 +52,19 @@ const router = createRouter({
       },
     },
     {
-      path: '/dashboard-staff',
-      name: 'DashboardStaff',
-      component: () => import('../views/Dashboard/DashboardStaff.vue'),
+      path: '/dashboard-petugas',
+      name: 'DashboardPetugas',
+      component: () => import('../views/Dashboard/DashboardPetugas.vue'),
       meta: {
-        title: 'Dashboard Staff',
+        title: 'Dashboard Petugas',
       },
     },
     {
-      path: '/dashboard-member',
-      name: 'DashboardMember',
-      component: () => import('../views/Dashboard/DashboardMember.vue'),
+      path: '/dashboard-anggota',
+      name: 'DashboardAnggota',
+      component: () => import('../views/Dashboard/DashboardAnggota.vue'),
       meta: {
-        title: 'Dashboard Member',
+        title: 'Dashboard Anggota',
       },
     },
 
@@ -78,24 +79,40 @@ const router = createRouter({
       },
     },
     {
-      path: '/staff-crud',
-      name: 'CRUD Staff',
-      component: () => import('../views/AccountManagement/StaffAccount.vue'),
+      path: '/petugas-crud',
+      name: 'CRUD Petugas',
+      component: () => import('../views/AccountManagement/PetugasAccount.vue'),
       meta: {
-        title: 'Staff Account Management',
+        title: 'Petugas Account Management',
       },
     },
     {
-      path: '/member-crud',
-      name: 'CRUD Member',
-      component: () => import('../views/AccountManagement/MemberAccount.vue'),
+      path: '/anggota-crud',
+      name: 'CRUD Anggota',
+      component: () => import('../views/AccountManagement/AnggotaAccount.vue'),
       meta: {
-        title: 'Member Account Management',
+        title: 'Anggota Account Management',
       },
     },
 
     //Books Managements Routes
 
+    {
+      path: '/books-list',
+      name: 'Books',
+      component: () => import('../views/BooksManagement/Books.vue'),
+      meta: {
+        title: 'Books Management',
+      },
+    },
+    {
+      path: '/books/:id',
+      name: 'BookDetail',
+      component: () => import('../views/BooksManagement/BookDetail.vue'),
+      meta: {
+        title: 'Book Detail',
+      },
+    },
     {
       path: '/books-category',
       name: 'Books Category',
@@ -109,6 +126,10 @@ const router = createRouter({
 
 export default router
 
+// Setup authentication guard
+setupAuthGuard(router)
+
+// Update page title
 router.beforeEach((to, from, next) => {
   document.title = `Vue.js ${to.meta.title} | TailAdmin - Vue.js Tailwind CSS Dashboard Template`
   next()

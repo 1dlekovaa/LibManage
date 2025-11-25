@@ -259,9 +259,9 @@ const confirmSignOut = () => {
   // Backend roles: admin, petugas, anggota
   let finalRedirectUrl = '/'
   if (userRole.includes('petugas')) {
-    finalRedirectUrl = '/signin-staff'
+    finalRedirectUrl = '/signin-petugas'
   } else if (userRole.includes('anggota')) {
-    finalRedirectUrl = '/signin-member'
+    finalRedirectUrl = '/signin-anggota'
   } else if (userRole.includes('admin')) {
     finalRedirectUrl = '/'
   }

@@ -342,6 +342,16 @@ const handleSubmit = async () => {
     const result = await handleLogin(email.value, password.value)
 
     if (result.success && result.data) {
+      // Validate role for admin signin page
+      if (result.data.user.role !== 'admin') {
+        errorMessage.value = 'Invalid credentials. Only admin users can login here.'
+        // Clear stored data
+        localStorage.removeItem('auth_token')
+        localStorage.removeItem('user_data')
+        isLoading.value = false
+        return
+      }
+
       // Success - show modal with small delay to ensure DOM update
       isLoading.value = false
       setTimeout(() => {

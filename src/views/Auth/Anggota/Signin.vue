@@ -204,7 +204,7 @@
           <div class="flex items-center justify-center z-1">
             <common-grid-shape />
             <div class="flex flex-col items-center max-w-xs">
-              <p class="text-center text-gray-400 dark:text-white/60">Login Staff</p>
+              <p class="text-center text-gray-400 dark:text-white/60">Login Member</p>
             </div>
           </div>
         </div>
@@ -275,85 +275,6 @@
     </Transition>
   </FullScreenLayout>
 </template>
-
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
-import CommonGridShape from '@/components/common/CommonGridShape.vue'
-import FullScreenLayout from '@/components/layout/FullScreenLayout.vue'
-import { handleLogin } from '@/services/authService'
-
-const router = useRouter()
-
-const email = ref('')
-const password = ref('')
-const showPassword = ref(false)
-const keepLoggedIn = ref(false)
-const isLoading = ref(false)
-const errorMessage = ref('')
-const showSuccessModal = ref(false)
-const countdown = ref(3)
-let countdownInterval: number | null = null
-
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
-}
-
-const closeModal = () => {
-  showSuccessModal.value = false
-  if (countdownInterval) clearInterval(countdownInterval)
-}
-
-const startCountdown = () => {
-  countdown.value = 3
-  countdownInterval = setInterval(() => {
-    countdown.value--
-    if (countdown.value === 0) {
-      if (countdownInterval) clearInterval(countdownInterval)
-      router.push('/dashboard-staff')
-    }
-  }, 1000)
-}
-
-watch(showSuccessModal, (newValue) => {
-  if (newValue) {
-    startCountdown()
-  }
-})
-
-const handleSubmit = async () => {
-  // Clear previous error message
-  errorMessage.value = ''
-
-  // Validate form fields
-  if (!email.value.trim() || !password.value.trim()) {
-    errorMessage.value = 'Please fill in all fields'
-    return
-  }
-
-  isLoading.value = true
-
-  try {
-    const result = await handleLogin(email.value, password.value)
-
-    if (result.success && result.data) {
-      // Success - show modal with small delay to ensure DOM update
-      isLoading.value = false
-      setTimeout(() => {
-        showSuccessModal.value = true
-      }, 100)
-    } else if (result.error) {
-      // Error - display error message
-      errorMessage.value = result.error.message
-      isLoading.value = false
-    }
-  } catch (error) {
-    console.error('Login error:', error)
-    errorMessage.value = 'An unexpected error occurred. Please try again.'
-    isLoading.value = false
-  }
-}
-</script>
 
 <style scoped>
 /* Modal Transitions */
@@ -514,3 +435,92 @@ const handleSubmit = async () => {
   }
 }
 </style>
+
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import CommonGridShape from '@/components/common/CommonGridShape.vue'
+import FullScreenLayout from '@/components/layout/FullScreenLayout.vue'
+import { handleLogin } from '@/services/authService'
+
+const router = useRouter()
+
+const email = ref('')
+const password = ref('')
+const showPassword = ref(false)
+const keepLoggedIn = ref(false)
+const isLoading = ref(false)
+const errorMessage = ref('')
+const showSuccessModal = ref(false)
+const countdown = ref(3)
+let countdownInterval: number | null = null
+
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value
+}
+
+const closeModal = () => {
+  showSuccessModal.value = false
+  if (countdownInterval) clearInterval(countdownInterval)
+}
+
+const startCountdown = () => {
+  countdown.value = 3
+  countdownInterval = setInterval(() => {
+    countdown.value--
+    if (countdown.value === 0) {
+      if (countdownInterval) clearInterval(countdownInterval)
+      router.push('/dashboard-member')
+    }
+  }, 1000)
+}
+
+watch(showSuccessModal, (newValue) => {
+  if (newValue) {
+    startCountdown()
+  }
+})
+
+const handleSubmit = async () => {
+  // Clear previous error message
+  errorMessage.value = ''
+
+  // Validate form fields
+  if (!email.value.trim() || !password.value.trim()) {
+    errorMessage.value = 'Please fill in all fields'
+    return
+  }
+
+  isLoading.value = true
+
+  try {
+    const result = await handleLogin(email.value, password.value)
+
+    if (result.success && result.data) {
+      // Validate role for member signin page
+      if (result.data.user.role !== 'anggota') {
+        errorMessage.value = 'Invalid credentials. Only member users can login here.'
+        // Clear stored data
+        localStorage.removeItem('auth_token')
+        localStorage.removeItem('user_data')
+        isLoading.value = false
+        return
+      }
+
+      // Success - show modal with small delay to ensure DOM update
+      isLoading.value = false
+      setTimeout(() => {
+        showSuccessModal.value = true
+      }, 100)
+    } else if (result.error) {
+      // Error - display error message
+      errorMessage.value = result.error.message
+      isLoading.value = false
+    }
+  } catch (error) {
+    console.error('Login error:', error)
+    errorMessage.value = 'An unexpected error occurred. Please try again.'
+    isLoading.value = false
+  }
+}
+</script>
