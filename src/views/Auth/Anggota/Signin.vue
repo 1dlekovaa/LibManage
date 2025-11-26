@@ -470,7 +470,7 @@ const startCountdown = () => {
     countdown.value--
     if (countdown.value === 0) {
       if (countdownInterval) clearInterval(countdownInterval)
-      router.push('/dashboard-member')
+      router.push('/home')
     }
   }, 1000)
 }

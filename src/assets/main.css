@@ -186,6 +186,15 @@ layer(base);
   body {
     @apply relative font-normal font-outfit z-1 bg-gray-50;
   }
+
+  /* Hide scrollbar */
+  html::-webkit-scrollbar {
+    display: none;
+  }
+  html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 @utility menu-item {

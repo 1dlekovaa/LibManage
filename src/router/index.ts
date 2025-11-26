@@ -59,12 +59,15 @@ const router = createRouter({
         title: 'Dashboard Petugas',
       },
     },
+
+    // Halaman Anggota
+
     {
-      path: '/dashboard-anggota',
-      name: 'DashboardAnggota',
-      component: () => import('../views/Dashboard/DashboardAnggota.vue'),
+      path: '/home',
+      name: 'Home',
+      component: () => import('../views/Home/Home.vue'),
       meta: {
-        title: 'Dashboard Anggota',
+        title: 'Home',
       },
     },
 
