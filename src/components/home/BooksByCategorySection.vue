@@ -80,7 +80,7 @@ defineProps<Props>()
 const router = useRouter()
 
 const goToBookDetail = (bookId: number) => {
-  router.push(`/books/${bookId}`)
+  router.push(`/book/${bookId}`)
 }
 </script>
 

@@ -99,6 +99,22 @@
         </div>
       </div>
 
+      <!-- Hamburger Menu Button (Top Left) -->
+      <button
+        v-if="!isNavbarOpen"
+        @click="toggleNavbarMenu"
+        class="absolute top-6 left-6 z-40 w-10 h-10 bg-black/50 hover:bg-black/80 text-white rounded flex items-center justify-center transition-all"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </button>
+
       <!-- Navigation Arrows -->
       <button
         @click="previousSlide"
@@ -139,6 +155,92 @@
       ></div>
     </div>
 
+    <!-- Mobile Navbar Overlay -->
+    <Teleport to="body">
+      <Transition
+        enter-active-class="transition duration-300"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition duration-300"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <div v-if="isNavbarOpen" class="fixed inset-0 z-30" @click="closeNavbarMenu">
+          <!-- Backdrop -->
+          <div class="absolute inset-0 bg-black/50"></div>
+
+          <!-- Navbar Overlay -->
+          <Transition
+            enter-active-class="transition duration-300 transform"
+            enter-from-class="-translate-x-full"
+            enter-to-class="translate-x-0"
+            leave-active-class="transition duration-300 transform"
+            leave-from-class="translate-x-0"
+            leave-to-class="-translate-x-full"
+          >
+            <nav
+              v-if="isNavbarOpen"
+              class="absolute top-0 left-0 h-full w-64 bg-gray-900 border-r border-gray-800 overflow-y-auto"
+              @click.stop
+            >
+              <!-- Close Button -->
+              <div class="flex items-center justify-between p-4 border-b border-gray-800">
+                <h3 class="text-white font-semibold">Menu</h3>
+                <button
+                  @click="closeNavbarMenu"
+                  class="text-gray-400 hover:text-white transition-colors"
+                >
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Menu Items -->
+              <div class="p-4 space-y-2">
+                <router-link
+                  to="/home"
+                  class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors"
+                  @click="closeNavbarMenu"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l4-4m0 0l4 4m-4-4v4"
+                    />
+                  </svg>
+                  Home
+                </router-link>
+
+                <router-link
+                  to="/profile"
+                  class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors"
+                  @click="closeNavbarMenu"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                  Profil
+                </router-link>
+              </div>
+            </nav>
+          </Transition>
+        </div>
+      </Transition>
+    </Teleport>
+
     <!-- Gradient Bridge Section -->
     <div class="h-24 bg-gradient-to-b from-gray-950 to-gray-950"></div>
   </div>
@@ -157,6 +259,7 @@ const props = defineProps<Props>()
 
 const router = useRouter()
 const currentSlide = ref(0)
+const isNavbarOpen = ref(false)
 let autoplayInterval: number | null = null
 
 // Gunakan computed untuk menampilkan slide maksimal 5 buku atau sesuai jumlah buku
@@ -167,8 +270,16 @@ const displayedBooks = computed(() => {
 
 const goToBookDetail = (bookId?: number) => {
   if (bookId) {
-    router.push(`/books/${bookId}`)
+    router.push(`/book/${bookId}`)
   }
+}
+
+const toggleNavbarMenu = () => {
+  isNavbarOpen.value = !isNavbarOpen.value
+}
+
+const closeNavbarMenu = () => {
+  isNavbarOpen.value = false
 }
 
 const nextSlide = () => {

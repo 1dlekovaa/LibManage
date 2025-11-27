@@ -109,6 +109,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/book/:id',
+      name: 'BooksPreview',
+      component: () => import('../views/BooksManagement/BooksPreview.vue'),
+      meta: {
+        title: 'Books Preview',
+      },
+    },
+    {
       path: '/books/:id',
       name: 'BookDetail',
       component: () => import('../views/BooksManagement/BookDetail.vue'),
@@ -134,6 +142,6 @@ setupAuthGuard(router)
 
 // Update page title
 router.beforeEach((to, from, next) => {
-  document.title = `Vue.js ${to.meta.title} | TailAdmin - Vue.js Tailwind CSS Dashboard Template`
+  document.title = `LibManage |  ${to.meta.title} `
   next()
 })

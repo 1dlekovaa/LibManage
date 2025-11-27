@@ -13,6 +13,7 @@
             <!-- Action Buttons -->
             <div class="mt-6 flex flex-col gap-3">
               <button
+                @click="isBorrowModalOpen = true"
                 class="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
               >
                 🔖 Pinjam Buku
@@ -83,14 +84,39 @@
       </div>
     </div>
   </div>
+
+  <!-- Borrow Modal -->
+  <BorrowModal
+    :book="book"
+    :is-open="isBorrowModalOpen"
+    @close="isBorrowModalOpen = false"
+    @success="handleBorrowSuccess"
+    @error="handleBorrowError"
+  />
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { Book } from '@/services/bookService'
+import BorrowModal from './BorrowModal.vue'
 
 interface Props {
   book: Book
 }
 
 defineProps<Props>()
+
+const isBorrowModalOpen = ref(false)
+
+const handleBorrowSuccess = (message: string) => {
+  console.log('Success:', message)
+  // TODO: Show success toast/notification
+  // Emit event ke parent atau call useToast() jika ada
+  isBorrowModalOpen.value = false
+}
+
+const handleBorrowError = (message: string) => {
+  console.error('Error:', message)
+  // TODO: Show error toast/notification
+}
 </script>

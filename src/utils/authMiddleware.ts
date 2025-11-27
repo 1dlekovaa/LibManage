@@ -66,7 +66,7 @@ export const getSigninPageByRole = (role: UserRole): string => {
   const signinMap: Record<UserRole, string> = {
     admin: '/dashboard-admin',
     petugas: '/dashboard-petugas',
-    anggota: '/dashboard-anggota',
+    anggota: '/home',
   }
 
   return signinMap[role]
@@ -113,13 +113,10 @@ export const setupAuthGuard = (router: any) => {
 
     // Dashboard Access Control - Only allow dashboard sesuai dengan role
     if (to.name === 'DashboardAdmin' && !hasRole('admin')) {
-      return next('/dashboard-' + userRole)
+      return next(getSigninPageByRole(userRole))
     }
     if (to.name === 'DashboardPetugas' && !hasRole('petugas')) {
-      return next('/dashboard-' + userRole)
-    }
-    if (to.name === 'DashboardAnggota' && !hasRole('anggota')) {
-      return next('/dashboard-' + userRole)
+      return next(getSigninPageByRole(userRole))
     }
 
     // Account Management Access Control - Only admin can access
@@ -127,7 +124,7 @@ export const setupAuthGuard = (router: any) => {
       (to.name === 'CRUD Admin' || to.name === 'CRUD Petugas' || to.name === 'CRUD Anggota') &&
       !hasRole('admin')
     ) {
-      return next('/dashboard-' + userRole)
+      return next(getSigninPageByRole(userRole))
     }
 
     // Allow route

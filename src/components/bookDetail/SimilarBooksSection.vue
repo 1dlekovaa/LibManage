@@ -80,6 +80,6 @@ const similarBooks = computed(() => {
 })
 
 const navigateToBook = (bookId: number) => {
-  router.push(`/books/${bookId}`)
+  router.push(`/book/${bookId}`)
 }
 </script>
