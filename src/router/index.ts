@@ -132,6 +132,15 @@ const router = createRouter({
         title: 'Books Category',
       },
     },
+
+    {
+      path: '/my-loans',
+      name: 'My Loans',
+      component: () => import('../views/BooksManagement/MyLoans.vue'),
+      meta: {
+        title: 'My Loans',
+      },
+    },
   ],
 })
 
