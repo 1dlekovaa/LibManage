@@ -5,7 +5,9 @@
         <p class="text-gray-600 dark:text-gray-400 text-sm font-medium">{{ title }}</p>
         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">{{ value }}</p>
       </div>
-      <div class="text-4xl">{{ icon }}</div>
+      <div class="text-4xl">
+        <slot>{{ icon }}</slot>
+      </div>
     </div>
   </div>
 </template>

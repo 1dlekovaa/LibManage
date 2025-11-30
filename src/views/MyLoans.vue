@@ -33,10 +33,70 @@
 
       <!-- Stats Cards -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <StatCard title="Total Loans" :value="totalLoans" :icon="'📚'" color="bg-blue-500/10" />
-        <StatCard title="Active" :value="activeLoans" :icon="'✓'" color="bg-green-500/10" />
-        <StatCard title="Pending" :value="pendingLoans" :icon="'⏳'" color="bg-yellow-500/10" />
-        <StatCard title="Rejected" :value="rejectedLoans" :icon="'✕'" color="bg-red-500/10" />
+        <StatCard title="Total Loans" :value="totalLoans" :icon="'📚'" color="bg-blue-500/10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-8 text-blue-600 dark:text-blue-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
+            />
+          </svg>
+        </StatCard>
+        <StatCard title="Active" :value="activeLoans" :icon="'✓'" color="bg-green-500/10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-8 text-green-600 dark:text-green-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </StatCard>
+        <StatCard title="Pending" :value="pendingLoans" :icon="'⏳'" color="bg-yellow-500/10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-8 text-yellow-600 dark:text-yellow-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </StatCard>
+        <StatCard title="Rejected" :value="rejectedLoans" :icon="'✕'" color="bg-red-500/10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-8 text-red-600 dark:text-red-400"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </StatCard>
       </div>
 
       <!-- Error Message -->
@@ -247,9 +307,18 @@ const fetchLoans = async () => {
 
   try {
     const token = localStorage.getItem('auth_token')
+    const userData = localStorage.getItem('user_data')
+
     if (!token) {
       throw new Error('You must login first')
     }
+
+    if (!userData) {
+      throw new Error('User data not found')
+    }
+
+    const currentUser = JSON.parse(userData)
+    const currentUserId = currentUser.id
 
     const response = await fetch('http://localhost:8000/api/borrow-requests', {
       method: 'GET',
@@ -265,7 +334,8 @@ const fetchLoans = async () => {
     }
 
     const data = await response.json()
-    loans.value = data.data || []
+    // Filter hanya loan milik user yang sedang login
+    loans.value = (data.data || []).filter((loan: BorrowRequest) => loan.user_id === currentUserId)
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'An error occurred'
     loans.value = []

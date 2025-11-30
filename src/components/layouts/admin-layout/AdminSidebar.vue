@@ -213,6 +213,11 @@ const menuGroups = [
           { name: 'Books List', path: '/books-list' },
         ],
       },
+      {
+        icon: ListIcon,
+        name: 'Loan Request',
+        path: '/loan-request',
+      },
     ],
   },
 ]

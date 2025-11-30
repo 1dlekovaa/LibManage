@@ -180,7 +180,7 @@
           >
             <nav
               v-if="isNavbarOpen"
-              class="absolute top-0 left-0 h-full w-64 bg-gray-900 border-r border-gray-800 overflow-y-auto"
+              class="absolute top-0 left-0 h-full w-64 bg-gray-900 border-r border-gray-800 overflow-y-auto flex flex-col"
               @click.stop
             >
               <!-- Close Button -->
@@ -202,7 +202,7 @@
               </div>
 
               <!-- Menu Items -->
-              <div class="p-4 space-y-2">
+              <div class="flex-1 px-4 py-6 space-y-2">
                 <router-link
                   to="/home"
                   class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors"
@@ -220,22 +220,6 @@
                 </router-link>
 
                 <router-link
-                  to="/profile"
-                  class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors"
-                  @click="closeNavbarMenu"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  Profil
-                </router-link>
-
-                <router-link
                   to="/my-loans"
                   class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white hover:bg-gray-800 rounded transition-colors"
                   @click="closeNavbarMenu"
@@ -246,7 +230,7 @@
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    class="size-6"
+                    class="w-5 h-5"
                   >
                     <path
                       stroke-linecap="round"
@@ -254,9 +238,26 @@
                       d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
                     />
                   </svg>
-
                   My Loans
                 </router-link>
+              </div>
+
+              <!-- Logout Button -->
+              <div class="px-4 py-4 border-t border-gray-800">
+                <button
+                  @click="handleLogout"
+                  class="w-full flex items-center gap-3 px-4 py-3 rounded-lg bg-red-600/10 hover:bg-red-600/20 text-red-400 hover:text-red-300 transition-colors font-medium"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
+                  <span>Logout</span>
+                </button>
               </div>
             </nav>
           </Transition>
@@ -303,6 +304,15 @@ const toggleNavbarMenu = () => {
 
 const closeNavbarMenu = () => {
   isNavbarOpen.value = false
+}
+
+const handleLogout = () => {
+  if (confirm('Are you sure you want to logout?')) {
+    localStorage.removeItem('auth_token')
+    localStorage.removeItem('user_data')
+    router.push('/signin')
+    closeNavbarMenu()
+  }
 }
 
 const nextSlide = () => {
