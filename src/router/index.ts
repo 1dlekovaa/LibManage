@@ -132,6 +132,24 @@ const router = createRouter({
         title: 'Books Category',
       },
     },
+    {
+      path: '/loan-request',
+      name: 'Loan Request',
+      component: () => import('../views/LoanRequest.vue'),
+      meta: {
+        title: 'Loan Requests',
+      },
+    },
+    {
+      path: '/manage-borrowings',
+      name: 'Manage Borrowings and Fines',
+      component: () => import('../views/ManageBorrowings.vue'),
+      meta: {
+        title: 'Manage Borrowings',
+      },
+    },
+
+    // Halaman Anggota Routes
 
     {
       path: '/my-loans',
@@ -142,11 +160,11 @@ const router = createRouter({
       },
     },
     {
-      path: '/loan-request',
-      name: 'Loan Request',
-      component: () => import('../views/LoanRequest.vue'),
+      path: '/my-books',
+      name: 'My Books',
+      component: () => import('../views/MyBooks.vue'),
       meta: {
-        title: 'Loan Requests',
+        title: 'My Books',
       },
     },
   ],

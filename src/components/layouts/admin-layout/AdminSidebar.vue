@@ -179,9 +179,12 @@ import {
   TableIcon,
   ListIcon,
   PlugInIcon,
+  BookIcon,
+  ArchiveIcon,
 } from '@/icons'
 import { useSidebar } from '@/composables/useSidebar'
 import UserGroupIcon from '@/icons/UserGroupIcon.vue'
+import FolderIcon from '@/icons/FolderIcon.vue'
 
 const route = useRoute()
 
@@ -206,7 +209,7 @@ const menuGroups = [
         ],
       },
       {
-        icon: UserGroupIcon,
+        icon: BookIcon,
         name: 'Books Management',
         subItems: [
           { name: 'Books Category', path: '/books-category' },
@@ -214,9 +217,14 @@ const menuGroups = [
         ],
       },
       {
-        icon: ListIcon,
+        icon: FolderIcon,
         name: 'Loan Request',
         path: '/loan-request',
+      },
+      {
+        icon: ArchiveIcon,
+        name: 'Kelola Peminjaman',
+        path: '/manage-borrowings',
       },
     ],
   },

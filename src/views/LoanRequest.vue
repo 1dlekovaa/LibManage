@@ -380,11 +380,139 @@
         </Transition>
       </div>
     </Transition>
+
+    <!-- Approve Success Modal -->
+    <Transition name="modal">
+      <div
+        v-if="showApproveSuccessModal"
+        class="fixed inset-0 z-[999999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      >
+        <div
+          class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 transform"
+        >
+          <!-- Animated Success Icon -->
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center animate-scale-in"
+              >
+                <svg
+                  class="w-10 h-10 text-green-600 dark:text-green-400 animate-bounce"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <!-- Particles -->
+              <div class="absolute inset-0">
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="text-center animate-fade-in-up">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              Request Disetujui! ✅
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-2 font-semibold text-sm">
+              {{ successMessage }}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Data telah diperbarui di dalam sistem
+            </p>
+
+            <!-- Progress Bar -->
+            <div
+              class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-6 mb-3 overflow-hidden"
+            >
+              <div class="bg-green-500 h-full rounded-full animate-progress"></div>
+            </div>
+
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Ditutup dalam {{ successCountdown }} detik...
+            </p>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- Reject Success Modal -->
+    <Transition name="modal">
+      <div
+        v-if="showRejectSuccessModal"
+        class="fixed inset-0 z-[999999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      >
+        <div
+          class="relative bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-8 transform"
+        >
+          <!-- Animated Reject Icon -->
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center animate-scale-in"
+              >
+                <svg
+                  class="w-10 h-10 text-red-600 dark:text-red-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <!-- Particles -->
+              <div class="absolute inset-0">
+                <div class="particle particle-1-reject"></div>
+                <div class="particle particle-2-reject"></div>
+                <div class="particle particle-3-reject"></div>
+                <div class="particle particle-4-reject"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="text-center animate-fade-in-up">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-3">Request Ditolak ✕</h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-2 font-semibold text-sm">
+              {{ successMessage }}
+            </p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Data telah diperbarui di dalam sistem
+            </p>
+
+            <!-- Progress Bar -->
+            <div
+              class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-6 mb-3 overflow-hidden"
+            >
+              <div class="bg-red-500 h-full rounded-full animate-progress"></div>
+            </div>
+
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Ditutup dalam {{ successCountdown }} detik...
+            </p>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </AdminLayout>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import AdminLayout from '@/components/layouts/admin-layout/AdminLayout.vue'
 import StatCard from '@/components/common/StatCard.vue'
 import RequestDetailModal from '@/components/bookDetail/RequestDetailModal.vue'
@@ -425,6 +553,13 @@ const showApproveConfirm = ref(false)
 const showRejectConfirm = ref(false)
 const approveRequest = ref<BorrowRequest | null>(null)
 const rejectRequest = ref<BorrowRequest | null>(null)
+
+// Success modals
+const showApproveSuccessModal = ref(false)
+const showRejectSuccessModal = ref(false)
+const successMessage = ref('')
+const successCountdown = ref(3)
+let successCountdownInterval: ReturnType<typeof setInterval> | null = null
 
 const filteredRequests = computed(() => {
   if (selectedStatus.value === 'all') {
@@ -555,11 +690,13 @@ const confirmApprove = async () => {
       throw new Error('Failed to approve request')
     }
 
-    // Close modal and refresh
+    // Set success message and show modal
+    successMessage.value = `Permintaan peminjaman dari ${approveRequest.value.user?.name} untuk "${approveRequest.value.book?.title}" telah disetujui`
     showApproveConfirm.value = false
-    await fetchRequests()
+    showApproveSuccessModal.value = true
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'An error occurred'
+  } finally {
     isProcessing.value = false
   }
 }
@@ -592,11 +729,13 @@ const confirmReject = async () => {
       throw new Error('Failed to reject request')
     }
 
-    // Close modal and refresh
+    // Set success message and show modal
+    successMessage.value = `Permintaan peminjaman dari ${rejectRequest.value.user?.name} untuk "${rejectRequest.value.book?.title}" telah ditolak`
     showRejectConfirm.value = false
-    await fetchRequests()
+    showRejectSuccessModal.value = true
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'An error occurred'
+  } finally {
     isProcessing.value = false
   }
 }
@@ -604,6 +743,30 @@ const confirmReject = async () => {
 // Load data on mount
 onMounted(() => {
   fetchRequests()
+})
+
+onUnmounted(() => {
+  if (successCountdownInterval) clearInterval(successCountdownInterval)
+})
+
+// Success modal countdown
+const startSuccessCountdown = () => {
+  successCountdown.value = 3
+  successCountdownInterval = setInterval(() => {
+    successCountdown.value--
+    if (successCountdown.value === 0) {
+      if (successCountdownInterval) clearInterval(successCountdownInterval)
+      showApproveSuccessModal.value = false
+      showRejectSuccessModal.value = false
+      fetchRequests()
+    }
+  }, 1000)
+}
+
+watch([showApproveSuccessModal, showRejectSuccessModal], ([approveModal, rejectModal]) => {
+  if (approveModal || rejectModal) {
+    startSuccessCountdown()
+  }
 })
 </script>
 
@@ -631,5 +794,161 @@ onMounted(() => {
 .modal-slide-leave-to {
   transform: scale(0.95) translateY(10px);
   opacity: 0;
+}
+
+/* Modal Transitions */
+.modal-enter-active {
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.modal-leave-active {
+  animation: modal-fade-out 0.2s ease-in;
+}
+
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Scale In Animation */
+@keyframes scale-in {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.4s ease-out;
+}
+
+/* Fade In Up Animation */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out 0.4s both;
+}
+
+/* Progress Bar Animation */
+@keyframes progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress 3s linear forwards;
+}
+
+/* Particles */
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.particle-1 {
+  background: #10b981;
+  top: 10%;
+  left: 10%;
+  animation: particle-float 1.5s ease-out 0.5s;
+}
+
+.particle-2 {
+  background: #3b82f6;
+  top: 20%;
+  right: 10%;
+  animation: particle-float 1.3s ease-out 0.6s;
+}
+
+.particle-3 {
+  background: #f59e0b;
+  bottom: 20%;
+  left: 15%;
+  animation: particle-float 1.4s ease-out 0.7s;
+}
+
+.particle-4 {
+  background: #8b5cf6;
+  bottom: 10%;
+  right: 15%;
+  animation: particle-float 1.6s ease-out 0.5s;
+}
+
+/* Reject Particles */
+.particle-1-reject {
+  background: #ef4444;
+  top: 10%;
+  left: 10%;
+  animation: particle-float 1.5s ease-out 0.5s;
+}
+
+.particle-2-reject {
+  background: #f87171;
+  top: 20%;
+  right: 10%;
+  animation: particle-float 1.3s ease-out 0.6s;
+}
+
+.particle-3-reject {
+  background: #fca5a5;
+  bottom: 20%;
+  left: 15%;
+  animation: particle-float 1.4s ease-out 0.7s;
+}
+
+.particle-4-reject {
+  background: #dc2626;
+  bottom: 10%;
+  right: 15%;
+  animation: particle-float 1.6s ease-out 0.5s;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-60px) scale(1);
+    opacity: 0;
+  }
 }
 </style>
