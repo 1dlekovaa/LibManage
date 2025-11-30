@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout>
+  <DynamicLayout>
     <div class="space-y-6 p-6">
       <!-- Header -->
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -375,27 +375,15 @@
               </div>
             </div>
           </div>
-
-          <!-- Statistics Card -->
-          <div
-            class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg shadow-sm p-6 text-white"
-          >
-            <h3 class="text-lg font-semibold mb-3">Statistik Cepat</h3>
-            <div class="space-y-2 text-sm">
-              <p>📚 Koleksi buku berkembang pesat</p>
-              <p>👥 Anggota perpustakaan terus bertambah</p>
-              <p>📊 Sistem berjalan lancar dan optimal</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-  </AdminLayout>
+  </DynamicLayout>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import AdminLayout from '@/components/layouts/admin-layout/AdminLayout.vue'
+import DynamicLayout from '@/components/layouts/DynamicLayout.vue'
 import { RouterLink } from 'vue-router'
 
 interface User {

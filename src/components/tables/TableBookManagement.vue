@@ -37,7 +37,7 @@
         <tr
           v-for="(book, index) in books"
           :key="book.id"
-          class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors"
+          class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors h-20"
         >
           <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
             {{ index + 1 }}
@@ -45,7 +45,7 @@
           <td class="px-6 py-4 text-sm">
             <div
               v-if="getCoverUrl(book)"
-              class="w-10 h-12 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden flex items-center justify-center flex-shrink-0"
+              class="w-10 h-16 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden flex items-center justify-center flex-shrink-0"
               :title="getCoverUrl(book)"
             >
               <img
@@ -71,7 +71,7 @@
             </div>
             <div
               v-else
-              class="w-10 h-12 bg-gray-300 dark:bg-gray-600 rounded flex items-center justify-center flex-shrink-0"
+              class="w-10 h-16 bg-gray-300 dark:bg-gray-600 rounded flex items-center justify-center flex-shrink-0"
               title="No cover URL"
             >
               <svg
@@ -91,13 +91,11 @@
           </td>
           <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
             <div
-              class="font-medium cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              class="font-medium cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate"
               @click="navigateToDetail(book)"
+              :title="book.title"
             >
               {{ book.title }}
-            </div>
-            <div class="text-xs text-gray-500 dark:text-gray-400 truncate" :title="book.sinopsis">
-              {{ truncateSinopsis(book.sinopsis) }}
             </div>
           </td>
           <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
@@ -105,7 +103,8 @@
           </td>
           <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
             <span
-              class="px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-300 rounded text-xs font-medium"
+              class="px-2 py-1 bg-blue-100 text-blue-800 dark:bg-blue-500/20 dark:text-blue-300 rounded text-xs font-medium inline-block truncate"
+              :title="book.category?.name || '-'"
             >
               {{ book.category?.name || '-' }}
             </span>
@@ -113,7 +112,7 @@
           <td class="px-6 py-4 text-sm">
             <div
               :class="[
-                'px-2 py-1 rounded text-xs font-medium inline-block',
+                'px-2 py-1 rounded text-xs font-medium inline-block whitespace-nowrap',
                 {
                   'bg-green-100 text-green-800 dark:bg-green-500/20 dark:text-green-300':
                     book.stock > 0,
@@ -121,7 +120,7 @@
                 },
               ]"
             >
-              {{ book.stock }} {{ book.stock === 1 ? 'buku' : 'buku' }}
+              {{ book.stock }} Buku
             </div>
           </td>
           <td class="px-6 py-4 text-right text-sm">

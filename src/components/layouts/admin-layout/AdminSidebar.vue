@@ -197,7 +197,7 @@ const menuGroups = [
       {
         icon: GridIcon,
         name: 'Dashboard',
-        subItems: [{ name: 'Dashboard', path: '/dashboard-admin' }],
+        path: '/dashboard-admin',
       },
       {
         icon: UserGroupIcon,

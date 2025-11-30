@@ -7,9 +7,6 @@
       <!-- Logo Section -->
       <div class="p-6 border-b border-gray-800">
         <router-link to="/home" class="flex items-center gap-2">
-          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-bold text-lg">📚</span>
-          </div>
           <div>
             <h2 class="text-white font-bold text-lg">LibManage</h2>
             <p class="text-gray-400 text-xs">Library System</p>

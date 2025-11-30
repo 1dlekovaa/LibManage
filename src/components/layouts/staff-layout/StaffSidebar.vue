@@ -1,7 +1,7 @@
 <template>
   <aside
     :class="[
-      'fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text:gray-900 h-screen transition-all duration-300 ease-in-out z-99999 border-r border-gray-200',
+      'fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-99999 border-r border-gray-200',
       {
         'lg:w-[290px]': isExpanded || isMobileOpen || isHovered,
         'lg:w-[90px]': !isExpanded && !isHovered,
@@ -14,7 +14,7 @@
     @mouseleave="isHovered = false"
   >
     <div :class="['py-8 flex', !isExpanded && !isHovered ? 'lg:justify-center' : 'justify-start']">
-      <router-link to="/dashboard-staff">
+      <router-link to="/dashboard-petugas">
         <h2
           v-if="isExpanded || isHovered || isMobileOpen"
           class="text-xl font-semibold text-gray-900 dark:text-white"
@@ -165,24 +165,9 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import {
-  GridIcon,
-  CalenderIcon,
-  UserCircleIcon,
-  ChatIcon,
-  MailIcon,
-  DocsIcon,
-  PieChartIcon,
-  ChevronDownIcon,
-  HorizontalDots,
-  PageIcon,
-  TableIcon,
-  ListIcon,
-  PlugInIcon,
-  TaskIcon,
-  BoxIcon,
-} from '@/icons'
+import { GridIcon, ChevronDownIcon, HorizontalDots, BookIcon, ArchiveIcon } from '@/icons'
 import { useSidebar } from '@/composables/useSidebar'
+import FolderIcon from '@/icons/FolderIcon.vue'
 
 const route = useRoute()
 
@@ -195,28 +180,25 @@ const menuGroups = [
       {
         icon: GridIcon,
         name: 'Dashboard',
-        subItems: [{ name: 'Staff', path: '/dashboard/staff', pro: false }],
+        path: '/dashboard-petugas',
       },
       {
-        icon: TaskIcon,
-        name: 'Tasks',
-        path: '/tasks',
-      },
-      {
-        icon: BoxIcon,
-        name: 'Management',
+        icon: BookIcon,
+        name: 'Books Management',
         subItems: [
-          { name: 'Books', path: '/management/books', pro: false },
-          { name: 'Members', path: '/management/members', pro: false },
+          { name: 'Books Category', path: '/books-category' },
+          { name: 'Books List', path: '/books-list' },
         ],
       },
       {
-        icon: PlugInIcon,
-        name: 'Account',
-        subItems: [
-          { name: 'My Profile', path: '/profile', pro: false },
-          { name: 'Settings', path: '/settings', pro: false },
-        ],
+        icon: FolderIcon,
+        name: 'Loan Request',
+        path: '/loan-request',
+      },
+      {
+        icon: ArchiveIcon,
+        name: 'Kelola Peminjaman',
+        path: '/manage-borrowings',
       },
     ],
   },

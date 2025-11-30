@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AdminLayout>
+    <DynamicLayout>
       <div class="grid grid-cols-12 gap-4 md:gap-6">
         <div class="col-span-12">
           <!-- Back Button -->
@@ -213,7 +213,7 @@
           </div>
         </div>
       </div>
-    </AdminLayout>
+    </DynamicLayout>
 
     <!-- Edit Modal (reuse dari Books.vue) -->
     <Transition
@@ -547,7 +547,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { AdminLayout } from '@/components/layouts/admin-layout'
+import DynamicLayout from '@/components/layouts/DynamicLayout.vue'
 import type { Book, Category } from '@/services/bookService'
 import { getBookById, updateBook, deleteBook, getAllCategories } from '@/services/bookService'
 import { useToast } from '@/composables/useToast'

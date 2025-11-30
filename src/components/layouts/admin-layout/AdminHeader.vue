@@ -91,7 +91,7 @@ import ThemeToggler from '@/components/common/ThemeToggler.vue'
 import SearchBar from '@/components/layout/header/SearchBar.vue'
 import HeaderLogo from '@/components/layout/header/HeaderLogo.vue'
 import NotificationMenu from '@/components/layout/header/NotificationMenu.vue'
-import UserMenu from '@/components/layout/header/UserMenu.vue'
+import UserMenu from '@/components/layouts/UserMenu.vue'
 
 const { toggleSidebar, toggleMobileSidebar, isMobileOpen } = useSidebar()
 

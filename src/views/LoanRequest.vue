@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout>
+  <DynamicLayout>
     <div class="space-y-6 p-6">
       <!-- Header -->
       <div class="flex justify-between items-center">
@@ -508,12 +508,12 @@
         </div>
       </div>
     </Transition>
-  </AdminLayout>
+  </DynamicLayout>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
-import AdminLayout from '@/components/layouts/admin-layout/AdminLayout.vue'
+import DynamicLayout from '@/components/layouts/DynamicLayout.vue'
 import StatCard from '@/components/common/StatCard.vue'
 import RequestDetailModal from '@/components/bookDetail/RequestDetailModal.vue'
 
