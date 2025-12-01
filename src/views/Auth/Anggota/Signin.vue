@@ -92,56 +92,6 @@
                         </span>
                       </div>
                     </div>
-                    <!-- Checkbox -->
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <label
-                          for="keepLoggedIn"
-                          class="flex items-center text-sm font-normal text-gray-700 cursor-pointer select-none dark:text-gray-400"
-                        >
-                          <div class="relative">
-                            <input
-                              v-model="keepLoggedIn"
-                              type="checkbox"
-                              id="keepLoggedIn"
-                              class="sr-only"
-                            />
-                            <div
-                              :class="
-                                keepLoggedIn
-                                  ? 'border-brand-500 bg-brand-500'
-                                  : 'bg-transparent border-gray-300 dark:border-gray-700'
-                              "
-                              class="mr-3 flex h-5 w-5 items-center justify-center rounded-md border-[1.25px]"
-                            >
-                              <span :class="keepLoggedIn ? '' : 'opacity-0'">
-                                <svg
-                                  width="14"
-                                  height="14"
-                                  viewBox="0 0 14 14"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M11.6666 3.5L5.24992 9.91667L2.33325 7"
-                                    stroke="white"
-                                    stroke-width="1.94437"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                          Keep me logged in
-                        </label>
-                      </div>
-                      <router-link
-                        to="/reset-password"
-                        class="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                        >Forgot password?</router-link
-                      >
-                    </div>
                     <!-- Error Message -->
                     <div
                       v-if="errorMessage"
@@ -182,18 +132,6 @@
                     </div>
                   </div>
                 </form>
-                <div class="mt-5">
-                  <p
-                    class="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start"
-                  >
-                    Don't have an account?
-                    <router-link
-                      to="/signup"
-                      class="text-brand-500 hover:text-brand-600 dark:text-brand-400"
-                      >Sign Up</router-link
-                    >
-                  </p>
-                </div>
               </div>
             </div>
           </div>
@@ -201,12 +139,7 @@
         <div
           class="relative items-center hidden w-full h-full lg:w-1/2 bg-brand-950 dark:bg-white/5 lg:grid"
         >
-          <div class="flex items-center justify-center z-1">
-            <common-grid-shape />
-            <div class="flex flex-col items-center max-w-xs">
-              <p class="text-center text-gray-400 dark:text-white/60">Login Member</p>
-            </div>
-          </div>
+          <img src="/images/Library.jpg" alt="" class="w-full h-full object-cover" />
         </div>
       </div>
     </div>
@@ -439,7 +372,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import CommonGridShape from '@/components/common/CommonGridShape.vue'
 import FullScreenLayout from '@/components/layout/FullScreenLayout.vue'
 import { handleLogin } from '@/services/authService'
 

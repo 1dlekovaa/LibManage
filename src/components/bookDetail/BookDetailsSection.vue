@@ -18,11 +18,6 @@
               >
                 🔖 Pinjam Buku
               </button>
-              <button
-                class="w-full px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
-              >
-                ❤️ Tambah Wishlist
-              </button>
             </div>
           </div>
         </div>

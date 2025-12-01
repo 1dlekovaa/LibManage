@@ -74,10 +74,6 @@
         :class="[isApplicationMenuOpen ? 'flex' : 'hidden']"
         class="items-center justify-between w-full gap-4 px-5 py-4 shadow-theme-md lg:flex lg:justify-end lg:px-0 lg:shadow-none"
       >
-        <div class="flex items-center gap-2 2xsm:gap-3">
-          <ThemeToggler />
-          <NotificationMenu />
-        </div>
         <UserMenu />
       </div>
     </div>
@@ -87,10 +83,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useSidebar } from '@/composables/useSidebar'
-import ThemeToggler from '@/components/common/ThemeToggler.vue'
-import SearchBar from '@/components/layout/header/SearchBar.vue'
-import HeaderLogo from '@/components/layout/header/HeaderLogo.vue'
-import NotificationMenu from '@/components/layout/header/NotificationMenu.vue'
 import UserMenu from '@/components/layouts/UserMenu.vue'
 
 const { toggleSidebar, toggleMobileSidebar, isMobileOpen } = useSidebar()

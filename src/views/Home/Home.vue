@@ -12,8 +12,12 @@
       <BooksByCategorySection :books-by-category="booksByCategory" />
 
       <!-- Loading State -->
-      <div v-if="loading" class="flex items-center justify-center py-12">
-        <div class="text-gray-400">Memuat buku-buku...</div>
+      <div v-if="loading" class="flex flex-col items-center justify-center pt-60">
+        <!-- Spinning Loader -->
+        <div
+          class="w-12 h-12 border-4 border-gray-700 border-t-blue-600 rounded-full animate-spin mb-4"
+        ></div>
+        <p class="text-gray-400">Memuat buku-buku...</p>
       </div>
 
       <!-- Empty State -->

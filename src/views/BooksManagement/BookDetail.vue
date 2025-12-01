@@ -188,27 +188,6 @@
                   </div>
                 </div>
               </div>
-
-              <div
-                class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6"
-              >
-                <h3
-                  class="text-sm font-medium text-gray-600 dark:text-gray-400 uppercase tracking-wide mb-4"
-                >
-                  File Cover
-                </h3>
-                <div class="space-y-3">
-                  <div v-if="book.cover">
-                    <span class="text-gray-600 dark:text-gray-400">Path File</span>
-                    <p class="font-medium text-gray-900 dark:text-white text-sm break-all mt-1">
-                      {{ book.cover }}
-                    </p>
-                  </div>
-                  <div v-else>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm">Tidak ada file cover</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

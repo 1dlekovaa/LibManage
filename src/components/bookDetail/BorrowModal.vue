@@ -46,7 +46,9 @@
           <!-- Content -->
           <div class="text-center animate-fade-in-up">
             <h2 class="text-2xl font-bold text-white mb-3">Berhasil! 🎉</h2>
-            <p class="text-gray-300 mb-2">Anda berhasil meminjam buku</p>
+            <p class="text-gray-300 mb-2">
+              Anda berhasil meminta buku, Silahkan menunggu persetujuan Staff
+            </p>
             <p class="text-gray-400">
               Silahkan cek halaman
               <span class="text-green-400 font-semibold">"My Loans"</span>
